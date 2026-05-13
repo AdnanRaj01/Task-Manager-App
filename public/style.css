@@ -1,0 +1,10 @@
+body{
+    font-family: Arial;
+    margin: 30px;
+}
+
+.task{
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 10px;
+}

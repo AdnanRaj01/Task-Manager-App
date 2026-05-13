@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager App</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Welcome to the Task Manager App</h1>
+    <form action="/tasks" method="get">
+        <input type="text" name="search" placeholder="Search tasks..." required>
+        <button type="submit">Search</button>
+    </form>
+    <br>
+    <a href="/tasks?status=completed">View Completed Tasks</a> <br><br>
+    <a href="/tasks?status=pending">View Pending Tasks</a> <br><br>
+    <a href="/tasks">View All Tasks</a><br><br>
+    <br><br>
+    <a href="/tasks/new">Create New Task</a>
+    <hr>
+    <% for(let task of tasks) { %>
+        <div class="task">
+            <h3><%= task.title %></h3>
+            <p><%= task.description %></p>
+            <p>Priority: <%= task.priority %></p>
+            <p> Due:<%= task.dueDate ? task.dueDate.toDateString() : "No Date" %></p>
+            <p>Status: <%= task.completed ? "Completed" : "Pending" %></p>
+            <form action="/tasks/<%= task._id %>/toggle?_method=PUT" method="post">
+                <button type="submit">Toggle Status</button>
+            </form>
+            <br>
+            <form action="/tasks/<%= task._id %>/edit" method="get">
+                <button type="submit">Edit</button>
+            </form>
+            <br>
+             <form action="/tasks/<%= task._id %>?_method=DELETE"
+                  method="POST"
+                  class="delete-form">
+
+                <button type="submit">
+                    Delete
+                </button>
+            </form> 
+            <br>
+            <a href="/tasks/<%= task._id %>">View Details</a>
+        </div>
+        <hr>
+    <% } %>
+        <script src="/app.js"></script>
+</body>
+</html>
