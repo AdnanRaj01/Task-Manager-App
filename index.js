@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // SESSION CONFIGURATION
 const sessionOptions = {
-    secret: 'mysupersecretkey',
+    secret: 'paste your secret key',
     resave: false,
     saveUninitialized: false
 };
