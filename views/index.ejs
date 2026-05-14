@@ -2,51 +2,177 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Task Manager App</title>
+
     <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
-    <h1>Welcome to the Task Manager App</h1>
-    <form action="/tasks" method="get">
-        <input type="text" name="search" placeholder="Search tasks..." required>
-        <button type="submit">Search</button>
+
+    <h1>Task Manager App</h1>
+
+    <% if(currentUser){ %>
+
+        <h3>
+            Welcome,
+            <%= currentUser.username %>
+        </h3>
+
+    <% } %>
+
+    <!-- SEARCH FORM -->
+
+    <form action="/tasks" method="GET">
+
+        <input type="text"
+               name="search"
+               placeholder="Search tasks...">
+
+        <button type="submit">
+            Search
+        </button>
+
     </form>
+
     <br>
-    <a href="/tasks?status=completed">View Completed Tasks</a> <br><br>
-    <a href="/tasks?status=pending">View Pending Tasks</a> <br><br>
-    <a href="/tasks">View All Tasks</a><br><br>
-    <br><br>
-    <a href="/tasks/new">Create New Task</a>
+
+    <!-- NAVIGATION -->
+
+    <a href="/tasks">
+        All Tasks
+    </a>
+
+    |
+
+    <a href="/tasks?status=completed">
+        Completed
+    </a>
+
+    |
+
+    <a href="/tasks?status=pending">
+        Pending
+    </a>
+
+    |
+
+    <a href="/tasks/new">
+        Create Task
+    </a>
+
+    |
+
+    <a href="/logout">
+        Logout
+    </a>
+
     <hr>
-    <% for(let task of tasks) { %>
+
+    <!-- TASK LIST -->
+
+    <% if(tasks.length === 0){ %>
+
+        <h3>No Tasks Found</h3>
+
+    <% } %>
+
+    <% for(let task of tasks){ %>
+
         <div class="task">
-            <h3><%= task.title %></h3>
-            <p><%= task.description %></p>
-            <p>Priority: <%= task.priority %></p>
-            <p> Due:<%= task.dueDate ? task.dueDate.toDateString() : "No Date" %></p>
-            <p>Status: <%= task.completed ? "Completed" : "Pending" %></p>
-            <form action="/tasks/<%= task._id %>/toggle?_method=PUT" method="post">
-                <button type="submit">Toggle Status</button>
+
+            <h2>
+                <%= task.title %>
+            </h2>
+
+            <p>
+                <strong>Description:</strong>
+
+                <%= task.description %>
+            </p>
+
+            <p>
+                <strong>Priority:</strong>
+
+                <%= task.priority %>
+            </p>
+
+            <p>
+                <strong>Due Date:</strong>
+
+                <%= task.dueDate
+                    ? task.dueDate.toDateString()
+                    : "No Date" %>
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+
+                <%= task.completed
+                    ? "Completed"
+                    : "Pending" %>
+            </p>
+
+            <!-- TOGGLE STATUS -->
+
+            <form action="/tasks/<%= task._id %>/toggle?_method=PUT"
+                  method="POST">
+
+                <button type="submit">
+
+                    <%= task.completed
+                        ? "Mark Pending"
+                        : "Mark Completed" %>
+
+                </button>
+
             </form>
+
             <br>
-            <form action="/tasks/<%= task._id %>/edit" method="get">
-                <button type="submit">Edit</button>
+
+            <!-- EDIT -->
+
+            <form action="/tasks/<%= task._id %>/edit"
+                  method="GET">
+
+                <button type="submit">
+                    Edit
+                </button>
+
             </form>
+
             <br>
-             <form action="/tasks/<%= task._id %>?_method=DELETE"
+
+            <!-- DELETE -->
+
+            <form action="/tasks/<%= task._id %>?_method=DELETE"
                   method="POST"
                   class="delete-form">
 
                 <button type="submit">
                     Delete
                 </button>
-            </form> 
+
+            </form>
+
             <br>
-            <a href="/tasks/<%= task._id %>">View Details</a>
+
+            <!-- VIEW DETAILS -->
+
+            <a href="/tasks/<%= task._id %>">
+                View Details
+            </a>
+
         </div>
+
         <hr>
+
     <% } %>
-        <script src="/app.js"></script>
+
+    <script src="/app.js"></script>
+
 </body>
 </html>

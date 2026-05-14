@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+
+# Coverage
+coverage/
+
+# Build folders
+dist/
+build/
+
+# Mongo dump / backup
+*.archive
+*.bson
+*.json
+
+# Session files
+sessions/
+
+# Local config files
+config.local.js
